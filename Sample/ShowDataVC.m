@@ -396,29 +396,6 @@
                     [alertController addAction:cancel];
                     [self presentViewController:alertController animated:YES completion:nil];
                     
-                } else {
-//                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//                    if ([[dict valueForKey:@"status"] integerValue] == 1) {
-//                        
-//                        NSString *strUserId = [NSString stringWithFormat:@"%ld",[[dict valueForKey:@"userid"] integerValue]];
-//                        
-//                        [[NSUserDefaults standardUserDefaults] setValue:strUserId forKey:@"UserId"];
-//                        
-//                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
-//                                                    @"Main" bundle:[NSBundle mainBundle]];
-//                        UIViewController *myController = [storyboard instantiateViewControllerWithIdentifier:@"InstructionVC"];
-//                        [self.navigationController pushViewController:myController animated:true];
-//                    } else {
-//                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[dict valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
-//                        
-//                        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//                            
-//                        }];
-//                        
-//                        [alertController addAction:cancel];
-//                        [self presentViewController:alertController animated:YES completion:nil];
-//                    }
-                    
                 }
             }
             
@@ -565,7 +542,8 @@
         return;
     }
     
-    [self hitEmailWebservice:YES];
+    [self sendPhone];
+//    [self hitEmailWebservice:YES];
 }
 
 - (void)didReceiveMemoryWarning {
