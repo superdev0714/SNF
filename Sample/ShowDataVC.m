@@ -16,6 +16,7 @@
     NSString *strEmail;
     NSString *strPhone;
     NSString *strName;
+    NSString *type;
 }
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConst;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightTxt;
@@ -42,13 +43,9 @@
     contactPhoneArray = [[NSMutableArray alloc] init];
     contactNameArray = [[NSMutableArray alloc] init];
     
-    btnSelectEmail.layer.borderWidth = 0.5f;
-    btnSelectEmail.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    btnSelectEmail.layer.cornerRadius = 5;
-    
-    btnPhoneNumber.layer.borderWidth = 0.5f;
-    btnPhoneNumber.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    btnPhoneNumber.layer.cornerRadius = 5;
+    btnContactInfo.layer.borderWidth = 0.5f;
+    btnContactInfo.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    btnContactInfo.layer.cornerRadius = 5;
     
     [self getEmailContacts];
     
@@ -102,15 +99,10 @@
     viewEntry.layer.borderColor = [UIColor whiteColor].CGColor;
     [viewEntry setClipsToBounds:YES];
     
-    btnSendEmail.layer.cornerRadius = 10.0;
-    btnSendEmail.layer.borderWidth = 1.0;
-    btnSendEmail.layer.borderColor = [UIColor blackColor].CGColor;
-    [btnSendEmail setClipsToBounds:YES];
-    
-    btnSendSMS.layer.cornerRadius = 10.0;
-    btnSendSMS.layer.borderWidth = 1.0;
-    btnSendSMS.layer.borderColor = [UIColor blackColor].CGColor;
-    [btnSendSMS setClipsToBounds:YES];
+    btnSend.layer.cornerRadius = 10.0;
+    btnSend.layer.borderWidth = 1.0;
+    btnSend.layer.borderColor = [UIColor blackColor].CGColor;
+    [btnSend setClipsToBounds:YES];
     
     arrayCount = [[NSMutableArray alloc]init];
     arrayKeyword = [[NSMutableArray alloc]init];
@@ -126,7 +118,7 @@
        _lblError.text = [dict valueForKey:@"message"];
         scroll.hidden = YES;
         lbl_Top.hidden = YES;
-        _btnEmail.hidden = YES;
+        _btnResult.hidden = YES;
         return;
     }
     
@@ -253,18 +245,55 @@
     return cell;
 }
 
--(IBAction)action_Email:(id)sender {
-    
-    viewPopUp.hidden = NO;
-    txtMesssage.text = @"";
-
-}
+#pragma mark - button events
 
 -(IBAction)action_Back:(id)sender {
     [[[UIApplication sharedApplication] delegate].window.rootViewController dismissViewControllerAnimated:true completion:nil];
 }
 
-- (IBAction)action_SelectEmail:(id)sender {
+-(IBAction)action_Result:(id)sender {
+    
+    NSArray *array = @[@"Email", @"SMS"];
+    [ActionSheetStringPicker showPickerWithTitle:@"Send Results" rows:array initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+        
+        type = (NSString*)selectedValue;
+        
+        if ([type isEqualToString:@"Email"]) {
+            lblType.text = @"Email :";
+        } else {
+            lblType.text = @"Phone :";
+        }
+        
+        [btnContactInfo setTitle:@"Select from Contacts" forState:UIControlStateNormal];
+        [btnContactInfo setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        
+        viewPopUp.hidden = NO;
+        txtMesssage.text = @"";
+    } cancelBlock:^(ActionSheetStringPicker *picker) {
+        
+    } origin:self.btnResult];
+    
+}
+
+- (IBAction)action_send:(id)sender {
+    if ([type isEqualToString:@"Email"]) {
+        [self sendEmail];
+    } else if ([type isEqualToString:@"SMS"]) {
+        [self sendSMS];
+    }
+}
+
+
+
+- (IBAction)selectContactInfo:(id)sender {
+    if ([type isEqualToString:@"Email"]) {
+        [self selectEmail];
+    } else if ([type isEqualToString:@"SMS"]) {
+        [self selectPhoneNubmer];
+    }
+}
+
+- (void)selectEmail {
     
     NSMutableArray *arrEmails = [[NSMutableArray alloc] init];
     NSMutableArray *arrPhones = [[NSMutableArray alloc] init];
@@ -278,32 +307,30 @@
         }
         
         [ActionSheetStringPicker showPickerWithTitle:@"Emails" rows:arrNames initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
-            [btnSelectEmail setTitle:arrEmails[selectedIndex] forState:UIControlStateNormal];
-            [btnSelectEmail setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [btnContactInfo setTitle:arrEmails[selectedIndex] forState:UIControlStateNormal];
+            [btnContactInfo setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             
             strEmail = arrEmails[selectedIndex];
             strName = arrNames[selectedIndex];
-            strPhone = arrPhones[selectedIndex];
+            strPhone = @"";
             
-            [btnPhoneNumber setTitle:strPhone forState:UIControlStateNormal];
-            [btnPhoneNumber setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            
-        } cancelBlock:nil origin:sender];
+        } cancelBlock:nil origin:btnContactInfo];
         
     }
     
 }
 
-- (IBAction)action_PhoneNubmer:(id)sender {
+- (void)selectPhoneNubmer {
     
     [ActionSheetStringPicker showPickerWithTitle:@"Contacts" rows:contactNameArray initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
-        [btnPhoneNumber setTitle:contactPhoneArray[selectedIndex] forState:UIControlStateNormal];
-        [btnPhoneNumber setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnContactInfo setTitle:contactPhoneArray[selectedIndex] forState:UIControlStateNormal];
+        [btnContactInfo setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
         for (CNContact *cnContact in contactDetailArray) {
             for (CNLabeledValue *label in cnContact.phoneNumbers) {
                 NSString *phoneNumber = [label.value stringValue];
                 if ([phoneNumber isEqual:contactPhoneArray[selectedIndex]]) {
+                    strEmail = @"";
                     strPhone = phoneNumber;
                     strName = [NSString stringWithFormat:@"%@ %@", cnContact.givenName, cnContact.familyName];
                 }
@@ -311,7 +338,7 @@
         }
     } cancelBlock:^(ActionSheetStringPicker *picker) {
         
-    } origin:sender];
+    } origin:btnContactInfo];
     
 }
 
@@ -324,7 +351,8 @@
     return YES;
 }
 
--(IBAction)action_SendEmail:(id)sender {
+#pragma mark -
+-(void)sendEmail {
     
     if (strEmail.length ==0 ) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Please select valid email address." preferredStyle:UIAlertControllerStyleAlert];
@@ -349,23 +377,21 @@
     }
     
     [self hitEmailWebservice:NO];
-//    [self sendPhone];
-}
-
--(BOOL)isnumericAlphaForEmail:(NSString*)string
-{
-    
-    BOOL stricterFilter = NO;
-    
-    NSString *stricterFilterString = @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}";
-    NSString *laxString = @".+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*";
-    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-    return [emailTest evaluateWithObject:string];
 }
 
 
--(void) sendPhone {
+-(void) sendSMS {
+    
+    if (strPhone.length ==0 ) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Please select valid Phone number." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alertController addAction:ok];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        return;
+    }
     
     [self.view endEditing:YES];
     
@@ -580,8 +606,6 @@
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-           // NSString *string = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-           // NSLog(@"email..result : %@",string);
             if (!error) {
                 
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"SNF Referral Scan sent successfully." preferredStyle:UIAlertControllerStyleAlert];
@@ -590,8 +614,6 @@
                 [alertController addAction:ok];
                 
                 [self presentViewController:alertController animated:YES completion:nil];
-                
-//                viewPopUp.hidden = YES;
                 
                 return;
                 
@@ -610,20 +632,17 @@
     
 }
 
--(IBAction)action_SendSMS:(id)sender {
-    if (strPhone.length ==0 ) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Please select valid Phone number." preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-        [alertController addAction:ok];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-        
-        return;
-    }
+
+-(BOOL)isnumericAlphaForEmail:(NSString*)string
+{
     
-    [self sendPhone];
-//    [self hitEmailWebservice:YES];
+    BOOL stricterFilter = NO;
+    
+    NSString *stricterFilterString = @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}";
+    NSString *laxString = @".+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:string];
 }
 
 - (void)didReceiveMemoryWarning {

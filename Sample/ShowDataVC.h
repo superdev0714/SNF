@@ -12,7 +12,7 @@
 
 @interface ShowDataVC : UIViewController <UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate>
 {
-    //UITextView *txtView;
+    
     IBOutlet UILabel *lbl_Top;
     IBOutlet UITableView *tbView;
     NSMutableArray *arrayKeyword;
@@ -23,12 +23,13 @@
     IBOutlet UIView *viewPopUp;
     IBOutlet UIView *viewEntry;
     
-    IBOutlet UIButton *btnSelectEmail;
     IBOutlet UITextField *txtMesssage;
-    IBOutlet UIButton *btnPhoneNumber;
     
-    IBOutlet UIButton *btnSendEmail;
-    IBOutlet UIButton *btnSendSMS;
+    IBOutlet UILabel *lblType;
+    IBOutlet UIButton *btnContactInfo;
+    
+    
+    IBOutlet UIButton *btnSend;
     IBOutlet UIScrollView *scroll;
     UIActivityIndicatorView *spinner1;
     NSDictionary *diction;
@@ -39,17 +40,16 @@
 @property (strong, nonatomic) NSMutableArray *contactPhoneArray;
 @property (strong, nonatomic) NSMutableArray *contactNameArray;
 
-@property (weak, nonatomic) IBOutlet UIButton *btnEmail;
+@property (weak, nonatomic) IBOutlet UIButton *btnResult;
 @property (weak, nonatomic) IBOutlet UILabel *lblError;
 @property (nonatomic,strong) NSDictionary *dict;
 
--(IBAction)action_Email:(id)sender;
--(IBAction)action_SendEmail:(id)sender;
--(IBAction)action_SendSMS:(id)sender;
--(IBAction)action_Back:(id)sender;
 
-- (IBAction)action_SelectEmail:(id)sender;
-- (IBAction)action_PhoneNubmer:(id)sender;
+-(IBAction)action_Back:(id)sender;
+-(IBAction)action_Result:(id)sender;
+- (IBAction)action_send:(id)sender;
+
+- (IBAction)selectContactInfo:(id)sender;
 - (IBAction)action_close:(id)sender;
 
 @end
