@@ -366,42 +366,122 @@
 
 
 -(void) sendPhone {
+    
+    [self.view endEditing:YES];
+    
+    NSString *strStart = @"<span style=\"background-color:yellow\">";
+    NSString *strEnd = @"</span>";
+    
+    NSMutableString *strContent = [[dict valueForKey:@"content"] mutableCopy];
+    
+    for (int i=1; i<arrayKeyword.count-1; i++) {
+        
+        NSArray *arr = [strContent componentsSeparatedByString:[arrayKeyword objectAtIndex:i]];
+        
+        NSMutableString *strKey = [[NSMutableString alloc]init];
+        
+        for (int j=0; j<arr.count-1; j++) {
+            [strKey appendString:[arr objectAtIndex:j]];
+            strStart = [NSString stringWithFormat:@"<span style=\"background-color:%@\">", [arrayColors objectAtIndex:i-1]];
+            [strKey appendString:strStart];
+            [strKey appendString:[arrayKeyword objectAtIndex:i]];
+            [strKey appendString:strEnd];
+        }
+        
+        [strKey appendString:[arr lastObject]];
+        
+        strContent = strKey;
+    }
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    NSString *noteDataString = [NSString stringWithFormat: @"https://snfscan.com/library/m_phone.php?phone=%@&name=%@", strPhone, strName];
-    [[[NSURLSession sharedSession]dataTaskWithURL:[NSURL URLWithString:noteDataString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSString *urlString = @"https://snfscan.com/library/m_phone.php";
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:60.0];
+    request.HTTPMethod = @"POST";
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
+    
+    NSMutableString *table = [NSMutableString string];
+    [table appendString:@"<center>"];
+    [table appendString:lbl_Top.text];
+    [table appendString:@"</center>"];
+    
+    [table appendString:@"<center>"];
+    
+    NSString *tableStart = @"<table border=\"1\">\n";
+    NSString *rowStart = @"  <tr>\n";
+    NSString *cellStart = @"    <td>";
+    NSString *cellEnd = @"</td>\n";
+    NSString *rowEnd = @"  </tr>\n";
+    NSString *tableEnd = @"</table>";
+    [table appendString:tableStart];
+    for (int i=0; i< arrayKeyword.count; i++) {
+        [table appendString:rowStart];  // one row for each object
+        
+        [table appendString:cellStart]; // first cell
+        [table appendString:[arrayKeyword objectAtIndex:i]];
+        [table appendString:cellEnd];
+        
+        [table appendString:cellStart]; // second cell
+        [table appendString:[arrayCount objectAtIndex:i]];
+        [table appendString:cellEnd];
+        
+        [table appendString:rowEnd]; // row end for each object
+    }
+    
+    [table appendString:tableEnd];
+    [table appendString:@"</center>"];
+    
+    [table appendString:@"<br></br>"];
+    [table appendString:@"DOCUMENT CONTENT"];
+    
+    [table appendString:strContent];
+    
+    NSDictionary *parameters = @{@"content" :table, @"attachment" : [dict valueForKey:@"filepath"], @"attachmentname" : [dict valueForKey:@"filename"], @"phone": strPhone, @"message" : txtMesssage.text};
+    
+    NSMutableArray *paramArray = [[NSMutableArray alloc]init];
+    
+    for (NSString *string in parameters.allKeys)
+    {
+        [paramArray addObject:[NSString stringWithFormat:@"%@=%@",string,[parameters objectForKey:string]]];
+    }
+    
+    NSString *params = [paramArray componentsJoinedByString:@"&"];
+    NSData *body = [params dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [request setHTTPBody: body];
+    
+    [[session dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            if (error) {
+            if (!error) {
                 
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"SNF Referral Scan sent successfully." preferredStyle:UIAlertControllerStyleAlert];
                 
-                UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
+                UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+                [alertController addAction:ok];
                 
-                [alertController addAction:cancel];
                 [self presentViewController:alertController animated:YES completion:nil];
                 
+                return;
+                
             } else {
-                if (data.length ==0) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Unable to connect with server. Please try again." preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                        
-                    }];
-                    
-                    [alertController addAction:cancel];
-                    [self presentViewController:alertController animated:YES completion:nil];
-                    
-                }
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+                [alertController addAction:ok];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+                
+                return;
             }
-            
         });
-        
-    }] resume];
+    }]resume];
 }
 
 -(void)hitEmailWebservice:(BOOL)isSMS {
