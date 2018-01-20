@@ -16,7 +16,6 @@
     NSString *strEmail;
     NSString *strPhone;
     NSString *strName;
-    NSString *type;
 }
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConst;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightTxt;
@@ -88,6 +87,7 @@
                     }
                     
                 }
+                [self orderbyAlphabets];
             }
         }
     }];
@@ -174,7 +174,6 @@
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (error) {
-                // NSLog(@"%@",[error localizedDescription]);
                 
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
                 
@@ -219,6 +218,24 @@
     return results;
 }
 
+-(void)orderbyAlphabets {
+
+    for (int i = 0; i < contactNameArray.count - 1; i++) {
+        for (int j = i+1; j < contactNameArray.count; j++) {
+            NSString *firstString = contactNameArray[i];
+            NSString *secondString = contactNameArray[j];
+            NSComparisonResult result = [firstString compare:secondString];
+        
+            if (result == NSOrderedDescending) {
+                [contactNameArray exchangeObjectAtIndex:i withObjectAtIndex:j];
+                [contactPhoneArray exchangeObjectAtIndex:i withObjectAtIndex:j];
+            }
+        }
+    }
+    
+}
+
+#pragma mark - tableview datasource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
@@ -253,44 +270,63 @@
 
 -(IBAction)action_Result:(id)sender {
     
-    NSArray *array = @[@"Email", @"SMS"];
-    [ActionSheetStringPicker showPickerWithTitle:@"Send Results" rows:array initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
-        
-        type = (NSString*)selectedValue;
-        
-        if ([type isEqualToString:@"Email"]) {
-            lblType.text = @"Email :";
-        } else {
-            lblType.text = @"Phone :";
-        }
-        
-        [btnContactInfo setTitle:@"Select from Contacts" forState:UIControlStateNormal];
-        [btnContactInfo setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        
-        viewPopUp.hidden = NO;
-        txtMesssage.text = @"";
-    } cancelBlock:^(ActionSheetStringPicker *picker) {
-        
-    } origin:self.btnResult];
+    [btnContactInfo setTitle:@"Select from Contacts" forState:UIControlStateNormal];
+    [btnContactInfo setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    
+    [scType setSelectedSegmentIndex:0];
+    lblType.text = @"Email";
+    strEmail = @"";
+    strPhone = @"";
+    strName = @"";
+    txtMesssage.text = @"";
+    viewPopUp.hidden = NO;
     
 }
 
-- (IBAction)action_send:(id)sender {
-    if ([type isEqualToString:@"Email"]) {
-        [self sendEmail];
-    } else if ([type isEqualToString:@"SMS"]) {
-        [self sendSMS];
+- (IBAction)onTypeChange:(id)sender {
+    switch (scType.selectedSegmentIndex) {
+        case 0:
+            lblType.text = @"Email";
+            break;
+        case 1:
+            lblType.text = @"Phone";
+            break;
+        default:
+            break;
+    }
+    [btnContactInfo setTitle:@"Select from Contacts" forState:UIControlStateNormal];
+    [btnContactInfo setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    
+}
+
+- (IBAction)selectContactInfo:(id)sender {
+    switch (scType.selectedSegmentIndex) {
+        case 0:
+            [self selectEmail];
+            break;
+        case 1:
+            [self selectPhoneNubmer];
+            break;
+        default:
+            break;
     }
 }
 
-
-
-- (IBAction)selectContactInfo:(id)sender {
-    if ([type isEqualToString:@"Email"]) {
-        [self selectEmail];
-    } else if ([type isEqualToString:@"SMS"]) {
-        [self selectPhoneNubmer];
+- (IBAction)action_send:(id)sender {
+    switch (scType.selectedSegmentIndex) {
+        case 0:
+            [self sendEmail];
+            break;
+        case 1:
+            [self sendSMS];
+            break;
+        default:
+            break;
     }
+}
+
+- (IBAction)action_close:(id)sender {
+    [viewPopUp setHidden:YES];
 }
 
 - (void)selectEmail {
@@ -342,9 +378,7 @@
     
 }
 
-- (IBAction)action_close:(id)sender {
-    [viewPopUp setHidden:YES];
-}
+
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
