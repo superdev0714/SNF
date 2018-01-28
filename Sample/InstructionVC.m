@@ -51,6 +51,9 @@
                     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                     
                     NSString *strName = [dict valueForKey:@"name"];
+                    [[NSUserDefaults standardUserDefaults] setValue:strName forKey:@"username"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
                     [self.lblWelcome setText:[NSString stringWithFormat:@"Welcome %@", strName]];
                     
                     NSString *strPlan = [dict valueForKey:@"plan"];
@@ -63,6 +66,19 @@
         
     }] resume];
     
+    
+    NSString *str1 = @"1. Open a PDF patient referral on mobile device.\n2. Select SHARE/IMPORT function and select SNFscan app.\n3. Select “Scan Doc” in top banner.\n4. Document scan will initiate (30+ seconds to process, 200 page daily limit) \n5. SNFscan results will display. \n6. Select “Share Results” in top banner. \n7. Select “Email” or “SMS text” from contacts, add optional message. \n\nPlease review and agree to service ";
+    NSAttributedString *attributedString1 = [[NSAttributedString alloc] initWithString:str1];
+    NSMutableAttributedString *strInstruction = [[NSMutableAttributedString alloc] init];
+    [strInstruction appendAttributedString:attributedString1];
+    
+    NSAttributedString *str2 = [[NSAttributedString alloc] initWithString:@"Terms & Conditions" attributes:@{NSLinkAttributeName: [NSURL URLWithString:@"https://snfscan.com/login/terms&condition.php"]}];
+    [strInstruction appendAttributedString:str2];
+    
+    NSAttributedString *str3 = [[NSAttributedString alloc] initWithString:@" prior to use. \n\n Level 1 (10 keywords) – FREE \n\n Level 2 (50 Standard keywords) - $100 p/m \n\n Level 3 (50 Standard & 50 Pharmacy keywords) - $189 p/m \n\n Level 4 (100 keywords & 50 Customized) – coming soon"];
+    [strInstruction appendAttributedString:str3];
+    
+    txtInstruction.attributedText = strInstruction;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -78,6 +94,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 - (void)pay {
     
@@ -377,11 +394,11 @@
 }
 
 - (IBAction)actionLink:(id)sender {
-    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://snfscan.com/login/sign_up.php"]];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://snfscan.com/login/terms&condition.php"]];
 }
 
 - (IBAction)actionChangePlan:(id)sender {
-    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://snfscan.com/login/login.php"]];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://www.snfscan.com"]];
 }
 
 //- (IBAction)action_addKeywords:(id)sender {

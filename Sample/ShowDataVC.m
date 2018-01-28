@@ -46,6 +46,10 @@
     btnContactInfo.layer.borderColor = [UIColor lightGrayColor].CGColor;
     btnContactInfo.layer.cornerRadius = 5;
     
+    txtMesssage.layer.borderWidth = 0.5f;
+    txtMesssage.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    txtMesssage.layer.cornerRadius = 5;
+    
     [self getEmailContacts];
     
     CNContactStore *cnContactStore = [[CNContactStore alloc] init];
@@ -410,7 +414,7 @@
         return;
     }
     
-    [self hitEmailWebservice:NO];
+    [self hitEmailWebservice];
 }
 
 
@@ -499,7 +503,9 @@
     
     [table appendString:strContent];
     
-    NSDictionary *parameters = @{@"content" :table, @"attachment" : [dict valueForKey:@"filepath"], @"attachmentname" : [dict valueForKey:@"filename"], @"phone": strPhone, @"message" : txtMesssage.text};
+    NSString *username = [[NSUserDefaults standardUserDefaults] valueForKey:@"username"];
+    
+    NSDictionary *parameters = @{@"content" :table, @"attachment" : [dict valueForKey:@"filepath"], @"attachmentname" : [dict valueForKey:@"filename"], @"phone": strPhone, @"message" : txtMesssage.text, @"name": username};
     
     NSMutableArray *paramArray = [[NSMutableArray alloc]init];
     
@@ -521,7 +527,7 @@
             
             if (!error) {
                 
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"SNF Referral Scan sent successfully." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"SNFscan results sent successfully." preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
                 [alertController addAction:ok];
@@ -544,7 +550,7 @@
     }]resume];
 }
 
--(void)hitEmailWebservice:(BOOL)isSMS {
+-(void)hitEmailWebservice{
     
     [self.view endEditing:YES];
     
@@ -618,10 +624,10 @@
     
     [table appendString:strContent];
     
-    NSDictionary *parameters = @{@"content" :table, @"attachment" : [dict valueForKey:@"filepath"], @"attachmentname" : [dict valueForKey:@"filename"], @"email": strEmail, @"message" : txtMesssage.text};
-    if (isSMS) {
-        parameters = @{@"content" :table, @"attachment" : [dict valueForKey:@"filepath"], @"attachmentname" : [dict valueForKey:@"filename"], @"email": strEmail, @"phone": strPhone, @"message" : txtMesssage.text};
-    }
+    NSString *username = [[NSUserDefaults standardUserDefaults] valueForKey:@"username"];
+    
+    NSDictionary *parameters = @{@"content" :table, @"attachment" : [dict valueForKey:@"filepath"], @"attachmentname": [dict valueForKey:@"filename"], @"email": strEmail, @"message": txtMesssage.text, @"name": username};
+    
     NSMutableArray *paramArray = [[NSMutableArray alloc]init];
     
     for (NSString *string in parameters.allKeys)
@@ -642,7 +648,7 @@
             
             if (!error) {
                 
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"SNF Referral Scan sent successfully." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"SNFscan results sent successfully." preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
                 [alertController addAction:ok];

@@ -21,6 +21,7 @@
     SKProduct *product;
     NSString *productID;
     
+    IBOutlet UITextView *txtInstruction;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *lblWelcome;

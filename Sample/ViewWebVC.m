@@ -130,7 +130,6 @@
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Document scaned successfully." preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        //UIStoryboard *storyboard = [UIStoryboard storyboardWithName: @"Main" bundle:[NSBundle mainBundle]];
                         ShowDataVC *myController = [self.storyboard instantiateViewControllerWithIdentifier:@"ShowDataVC"];
                         myController.dict = json;
                         [self presentViewController:myController animated:true completion:nil];

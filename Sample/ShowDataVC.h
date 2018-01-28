@@ -23,7 +23,7 @@
     IBOutlet UIView *viewPopUp;
     IBOutlet UIView *viewEntry;
     
-    IBOutlet UITextField *txtMesssage;
+    IBOutlet UITextView *txtMesssage;
     
     IBOutlet UISegmentedControl *scType;
     

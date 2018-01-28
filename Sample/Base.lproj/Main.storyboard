@@ -340,36 +340,50 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtR-1E-KEG">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UtR-1E-KEG">
                                 <rect key="frame" x="31" y="190" width="258" height="293"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <attributedString key="attributedText">
                                     <fragment>
-                                        <string key="content">1. Open a PDF patient referral on iOS mobile device.
-2. Select SHARE/IMPORT button to select SNFscan app.
-3. Select SCAN DOC on right section of top banner. 4. Scan will initiate (30+ seconds to process, 200 daily page max). 5. Initial 10 FREE keywords will result.
-6. Select EMAIL RESULTS button on top right section of top banner to send.
-7. Users have the option to add 10 or 20 additional keywords with membership.
+                                        <mutableString key="content">1. Open a PDF patient referral on mobile device.
+2. Select SHARE/IMPORT function and select SNFscan app.
+3. Select “Scan Doc” in top banner.
+4. Document scan will initiate (30+ seconds to process, 200 page daily limit)
+5. SNFscan results will display.
+6. Select “Share Results” in top banner.
+7. Select “Email” or “SMS text” from contacts, add optional message.
 
-FREE Keyword List:
+Please review and agree to service Terms &amp; Conditions (link to page) prior to use.
 
-Behaviors
-Custodial
-Discharge
-Fall
-Intravenous
-Pain
-Restraint
-Smoker
-Walker
-Wound</string>
+Level 1 (10 keywords) – FREE
+
+Level 2 (50 Standard keywords) - $100 p/m
+
+Level 3 (50 Standard &amp; 50 Pharmacy keywords) - $189 p/m
+
+</mutableString>
                                         <attributes>
-                                            <font key="NSFont" metaFont="system" size="14"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            <color key="NSColor" red="0.20784313725490197" green="0.20784313725490197" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="12" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Level 4 (100 keywords &amp; 50 Customized) – coming soon 
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.20784313725490197" green="0.20784313725490197" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="12" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jav-IZ-HlQ">
                                 <rect key="frame" x="112.5" y="493" width="95" height="25"/>
@@ -417,6 +431,7 @@ Wound</string>
                     <connections>
                         <outlet property="lblPlan" destination="94w-Wj-x8e" id="PDa-4m-gCb"/>
                         <outlet property="lblWelcome" destination="ZTV-0e-wUd" id="f1e-xp-cL0"/>
+                        <outlet property="txtInstruction" destination="UtR-1E-KEG" id="l5t-4o-zXU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2V-sj-od5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -686,7 +701,7 @@ Wound</string>
                                             <constraint firstAttribute="height" constant="27" id="mfu-vs-atJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <state key="normal" title="Send Results"/>
+                                        <state key="normal" title="Share Results"/>
                                         <connections>
                                             <action selector="action_Result:" destination="4L4-tg-C8O" eventType="touchUpInside" id="Tjg-lO-usW"/>
                                         </connections>
@@ -800,7 +815,7 @@ Wound</string>
                                             <outlet property="delegate" destination="4L4-tg-C8O" id="peh-hg-YOS"/>
                                         </connections>
                                     </tableView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DOCUMENT CONTENT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQP-LR-pzq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Document Content (Raw Script)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQP-LR-pzq">
                                         <rect key="frame" x="10" y="204" width="310" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="sw1-qF-h99"/>
@@ -836,104 +851,121 @@ Wound</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOw-L5-wHF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x3S-KV-BoX">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PO5-0e-krH">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IJR-NB-Gio">
-                                                <rect key="frame" x="20" y="180" width="280" height="180"/>
+                                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x3S-KV-BoX" userLabel="Overlay View">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SO7-J3-OEl">
+                                                <rect key="frame" x="20" y="180" width="280" height="240"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JRk-hb-EBt">
-                                                        <rect key="frame" x="10" y="10" width="260" height="160"/>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5CY-fE-M85">
+                                                        <rect key="frame" x="10" y="20" width="260" height="29"/>
+                                                        <segments>
+                                                            <segment title="Email"/>
+                                                            <segment title="SMS"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="onTypeChange:" destination="4L4-tg-C8O" eventType="valueChanged" id="52q-KI-IJx"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="InJ-qR-JfC">
+                                                        <rect key="frame" x="10" y="60" width="260" height="30"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="z55-pt-NKu">
-                                                                <rect key="frame" x="0.0" y="0.0" width="260" height="25"/>
-                                                                <subviews>
-                                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zwF-Ep-r21">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="260" height="26"/>
-                                                                        <segments>
-                                                                            <segment title="Email"/>
-                                                                            <segment title="SMS"/>
-                                                                        </segments>
-                                                                        <connections>
-                                                                            <action selector="onTypeChange:" destination="4L4-tg-C8O" eventType="valueChanged" id="AP8-ik-dAG"/>
-                                                                        </connections>
-                                                                    </segmentedControl>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Yh6-3a-HXW">
-                                                                <rect key="frame" x="0.0" y="45" width="260" height="25"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone : " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40y-gR-fAw">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="25"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="70" id="lZI-6c-kvr"/>
-                                                                        </constraints>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ed-zf-Jcs" userLabel="btnContactInfo">
-                                                                        <rect key="frame" x="70" y="0.0" width="190" height="25"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                                        <state key="normal" title="Select from Contacts">
-                                                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="selectContactInfo:" destination="4L4-tg-C8O" eventType="touchUpInside" id="OTc-9T-YB2"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="rdj-Gi-v8f">
-                                                                <rect key="frame" x="0.0" y="90" width="260" height="25"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message : " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PPr-j4-XSv">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="25"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="70" id="nVW-vv-IHf"/>
-                                                                        </constraints>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Messsage" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0jK-Hs-rLw">
-                                                                        <rect key="frame" x="70" y="0.0" width="190" height="25"/>
-                                                                        <nil key="textColor"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                        <textInputTraits key="textInputTraits"/>
-                                                                        <connections>
-                                                                            <outlet property="delegate" destination="4L4-tg-C8O" id="5aO-dv-5Pa"/>
-                                                                        </connections>
-                                                                    </textField>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3NC-Dq-gZI">
-                                                                <rect key="frame" x="0.0" y="135" width="260" height="25"/>
-                                                                <state key="normal" title="Send"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone : " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAX-AE-lzS">
+                                                                <rect key="frame" x="0.0" y="1" width="70" height="28"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="70" id="nS4-QQ-u4k"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxp-Zi-dhm" userLabel="btnContactInfo">
+                                                                <rect key="frame" x="78" y="1" width="182" height="28"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                <state key="normal" title="Select from Contacts">
+                                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </state>
                                                                 <connections>
-                                                                    <action selector="action_send:" destination="4L4-tg-C8O" eventType="touchUpInside" id="80q-mg-iVW"/>
+                                                                    <action selector="selectContactInfo:" destination="4L4-tg-C8O" eventType="touchUpInside" id="aPu-8K-wdS"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="160" id="KEm-9f-yCl"/>
+                                                            <constraint firstItem="xAX-AE-lzS" firstAttribute="top" secondItem="InJ-qR-JfC" secondAttribute="top" constant="1" id="Lyb-lA-AZr"/>
+                                                            <constraint firstAttribute="height" constant="30" id="VAn-xp-phS"/>
+                                                            <constraint firstItem="mxp-Zi-dhm" firstAttribute="leading" secondItem="xAX-AE-lzS" secondAttribute="trailing" constant="8" id="aL4-uL-lmy"/>
+                                                            <constraint firstAttribute="bottom" secondItem="mxp-Zi-dhm" secondAttribute="bottom" constant="1" id="ddA-hj-XDl"/>
+                                                            <constraint firstAttribute="trailing" secondItem="mxp-Zi-dhm" secondAttribute="trailing" id="e9d-eg-L0n"/>
+                                                            <constraint firstAttribute="bottom" secondItem="xAX-AE-lzS" secondAttribute="bottom" constant="1" id="hPh-ah-Tlg"/>
+                                                            <constraint firstItem="xAX-AE-lzS" firstAttribute="leading" secondItem="InJ-qR-JfC" secondAttribute="leading" id="l9K-9z-tcH"/>
+                                                            <constraint firstItem="mxp-Zi-dhm" firstAttribute="top" secondItem="InJ-qR-JfC" secondAttribute="top" constant="1" id="sDw-hy-MNc"/>
                                                         </constraints>
-                                                    </stackView>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NtM-LE-CTT">
+                                                        <rect key="frame" x="10" y="102" width="260" height="78"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message : " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obR-rf-YeA">
+                                                                <rect key="frame" x="0.0" y="6" width="70" height="18"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="70" id="de5-64-DWc"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Messsage" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lCQ-cs-gDM">
+                                                                <rect key="frame" x="78" y="0.0" width="182" height="78"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                            </textView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstItem="obR-rf-YeA" firstAttribute="top" secondItem="NtM-LE-CTT" secondAttribute="top" constant="6" id="NFT-ga-kYr"/>
+                                                            <constraint firstItem="lCQ-cs-gDM" firstAttribute="leading" secondItem="obR-rf-YeA" secondAttribute="trailing" constant="8" id="PQ0-1x-RQk"/>
+                                                            <constraint firstAttribute="trailing" secondItem="lCQ-cs-gDM" secondAttribute="trailing" id="WmY-cD-nlD"/>
+                                                            <constraint firstItem="obR-rf-YeA" firstAttribute="leading" secondItem="NtM-LE-CTT" secondAttribute="leading" id="fDf-5K-OKa"/>
+                                                            <constraint firstItem="lCQ-cs-gDM" firstAttribute="top" secondItem="NtM-LE-CTT" secondAttribute="top" id="lzT-E7-tbA"/>
+                                                            <constraint firstAttribute="bottom" secondItem="lCQ-cs-gDM" secondAttribute="bottom" id="pmt-qM-GjC"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-d2-xA3">
+                                                        <rect key="frame" x="10" y="190" width="260" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="30" id="6KW-0b-kIl"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Send"/>
+                                                        <connections>
+                                                            <action selector="action_send:" destination="4L4-tg-C8O" eventType="touchUpInside" id="bIw-tr-oiR"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstItem="JRk-hb-EBt" firstAttribute="top" secondItem="IJR-NB-Gio" secondAttribute="top" constant="10" id="W9r-1Y-jaz"/>
-                                                    <constraint firstAttribute="height" constant="180" id="WlF-2i-1RU"/>
-                                                    <constraint firstItem="JRk-hb-EBt" firstAttribute="leading" secondItem="IJR-NB-Gio" secondAttribute="leading" constant="10" id="opU-Xb-Hpz"/>
-                                                    <constraint firstAttribute="trailing" secondItem="JRk-hb-EBt" secondAttribute="trailing" constant="10" id="tnP-ra-EZg"/>
+                                                    <constraint firstAttribute="bottom" secondItem="mlc-d2-xA3" secondAttribute="bottom" constant="20" id="3Mu-V3-ne3"/>
+                                                    <constraint firstItem="5CY-fE-M85" firstAttribute="leading" secondItem="SO7-J3-OEl" secondAttribute="leading" constant="10" id="4Vr-k6-6u9"/>
+                                                    <constraint firstItem="mlc-d2-xA3" firstAttribute="top" secondItem="NtM-LE-CTT" secondAttribute="bottom" constant="10" id="5gp-Vp-nqW"/>
+                                                    <constraint firstItem="NtM-LE-CTT" firstAttribute="top" secondItem="InJ-qR-JfC" secondAttribute="bottom" constant="12" id="AIa-8z-bOu"/>
+                                                    <constraint firstAttribute="trailing" secondItem="InJ-qR-JfC" secondAttribute="trailing" constant="10" id="L30-YT-lVU"/>
+                                                    <constraint firstItem="InJ-qR-JfC" firstAttribute="top" secondItem="5CY-fE-M85" secondAttribute="bottom" constant="12" id="QHQ-yL-NfS"/>
+                                                    <constraint firstAttribute="trailing" secondItem="mlc-d2-xA3" secondAttribute="trailing" constant="10" id="UDU-NJ-7vr"/>
+                                                    <constraint firstAttribute="trailing" secondItem="5CY-fE-M85" secondAttribute="trailing" constant="10" id="UdW-XS-xJr"/>
+                                                    <constraint firstItem="InJ-qR-JfC" firstAttribute="leading" secondItem="SO7-J3-OEl" secondAttribute="leading" constant="10" id="VzA-As-50X"/>
+                                                    <constraint firstAttribute="trailing" secondItem="NtM-LE-CTT" secondAttribute="trailing" constant="10" id="YWv-zf-3bb"/>
+                                                    <constraint firstItem="NtM-LE-CTT" firstAttribute="leading" secondItem="SO7-J3-OEl" secondAttribute="leading" constant="10" id="e1e-Id-zrl"/>
+                                                    <constraint firstItem="mlc-d2-xA3" firstAttribute="leading" secondItem="SO7-J3-OEl" secondAttribute="leading" constant="10" id="jBh-aY-Nad"/>
+                                                    <constraint firstAttribute="height" constant="240" id="kJl-vV-W2b"/>
+                                                    <constraint firstItem="5CY-fE-M85" firstAttribute="top" secondItem="SO7-J3-OEl" secondAttribute="top" constant="20" id="pae-oH-Csc"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gc7-rZ-rv5">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gc7-rZ-rv5" userLabel="btnClose">
                                                 <rect key="frame" x="280" y="160" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="7is-0x-1vV"/>
@@ -947,24 +979,24 @@ Wound</string>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="Gc7-rZ-rv5" firstAttribute="top" secondItem="IJR-NB-Gio" secondAttribute="top" constant="-20" id="G2U-Eh-3Zp"/>
-                                            <constraint firstAttribute="trailing" secondItem="IJR-NB-Gio" secondAttribute="trailing" constant="20" id="dmr-fx-A1e"/>
+                                            <constraint firstItem="SO7-J3-OEl" firstAttribute="top" secondItem="PO5-0e-krH" secondAttribute="top" constant="180" id="36n-3B-h2d"/>
+                                            <constraint firstItem="x3S-KV-BoX" firstAttribute="leading" secondItem="PO5-0e-krH" secondAttribute="leading" id="6qH-xW-hyR"/>
+                                            <constraint firstItem="SO7-J3-OEl" firstAttribute="leading" secondItem="PO5-0e-krH" secondAttribute="leading" constant="20" id="9r4-uQ-sQa"/>
+                                            <constraint firstAttribute="trailing" secondItem="x3S-KV-BoX" secondAttribute="trailing" id="H2y-EV-b9j"/>
+                                            <constraint firstAttribute="bottom" secondItem="x3S-KV-BoX" secondAttribute="bottom" id="MPc-ij-5Wa"/>
+                                            <constraint firstAttribute="trailing" secondItem="SO7-J3-OEl" secondAttribute="trailing" constant="20" id="T8Z-aR-FNg"/>
                                             <constraint firstAttribute="trailing" secondItem="Gc7-rZ-rv5" secondAttribute="trailing" id="du5-3N-tZz"/>
-                                            <constraint firstItem="IJR-NB-Gio" firstAttribute="top" secondItem="PO5-0e-krH" secondAttribute="top" constant="180" id="nue-y9-d3x"/>
-                                            <constraint firstItem="IJR-NB-Gio" firstAttribute="leading" secondItem="PO5-0e-krH" secondAttribute="leading" constant="20" id="q2O-ah-zBK"/>
+                                            <constraint firstItem="x3S-KV-BoX" firstAttribute="top" secondItem="PO5-0e-krH" secondAttribute="top" id="hvo-zj-ghG"/>
+                                            <constraint firstItem="Gc7-rZ-rv5" firstAttribute="top" secondItem="SO7-J3-OEl" secondAttribute="top" constant="-20" id="l9D-7b-pWR"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="x3S-KV-BoX" secondAttribute="trailing" id="1JT-Aa-1Tm"/>
                                     <constraint firstItem="PO5-0e-krH" firstAttribute="top" secondItem="TOw-L5-wHF" secondAttribute="top" id="1r5-Fq-srG"/>
                                     <constraint firstAttribute="bottom" secondItem="PO5-0e-krH" secondAttribute="bottom" id="MdO-45-bX1"/>
-                                    <constraint firstAttribute="bottom" secondItem="x3S-KV-BoX" secondAttribute="bottom" id="NXh-Sf-ICR"/>
                                     <constraint firstItem="PO5-0e-krH" firstAttribute="leading" secondItem="TOw-L5-wHF" secondAttribute="leading" id="Qkv-VG-ng9"/>
-                                    <constraint firstItem="x3S-KV-BoX" firstAttribute="top" secondItem="TOw-L5-wHF" secondAttribute="top" id="dzB-TX-6iw"/>
                                     <constraint firstAttribute="trailing" secondItem="PO5-0e-krH" secondAttribute="trailing" id="mr2-Hb-tKQ"/>
-                                    <constraint firstItem="x3S-KV-BoX" firstAttribute="leading" secondItem="TOw-L5-wHF" secondAttribute="leading" id="r71-Ep-uuc"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -991,20 +1023,20 @@ Wound</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="btnContactInfo" destination="2Ed-zf-Jcs" id="iQb-fo-p9N"/>
+                        <outlet property="btnContactInfo" destination="mxp-Zi-dhm" id="wAJ-1i-oHp"/>
                         <outlet property="btnResult" destination="qH6-Cs-7lS" id="jvX-I4-EdZ"/>
-                        <outlet property="btnSend" destination="3NC-Dq-gZI" id="C00-fY-FRB"/>
+                        <outlet property="btnSend" destination="mlc-d2-xA3" id="vnm-ab-jnU"/>
                         <outlet property="heightConst" destination="ChU-6M-aKT" id="WYU-t2-HyQ"/>
                         <outlet property="heightTxt" destination="SrD-Rg-isg" id="ezE-hh-Eug"/>
                         <outlet property="lblError" destination="cny-KT-Zww" id="dZo-6y-czU"/>
-                        <outlet property="lblType" destination="40y-gR-fAw" id="F4n-lv-MVF"/>
+                        <outlet property="lblType" destination="xAX-AE-lzS" id="WhJ-DT-ewd"/>
                         <outlet property="lbl_Top" destination="GJG-uy-VaD" id="Hmg-Zm-can"/>
-                        <outlet property="scType" destination="zwF-Ep-r21" id="l3c-se-X6Z"/>
+                        <outlet property="scType" destination="5CY-fE-M85" id="H2w-jC-eZQ"/>
                         <outlet property="scroll" destination="ufX-gu-ya6" id="8dJ-eD-ugC"/>
                         <outlet property="tbView" destination="Oq3-Eo-H1k" id="qvs-2A-WEA"/>
-                        <outlet property="txtMesssage" destination="0jK-Hs-rLw" id="NbF-7u-gAj"/>
+                        <outlet property="txtMesssage" destination="lCQ-cs-gDM" id="lye-a8-VZY"/>
                         <outlet property="txtView" destination="vOU-gf-X2q" id="WAy-fI-4gD"/>
-                        <outlet property="viewEntry" destination="IJR-NB-Gio" id="r5M-bd-7ey"/>
+                        <outlet property="viewEntry" destination="SO7-J3-OEl" id="61U-lM-G5t"/>
                         <outlet property="viewPopUp" destination="TOw-L5-wHF" id="bdF-WD-VIw"/>
                     </connections>
                 </viewController>

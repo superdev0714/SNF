@@ -32,7 +32,6 @@
     signup = false;
     [btn_Login setEnabled:NO];
     
-    //NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"UserId"]);
     if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"UserId"] length] > 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
         UIViewController *myController = [storyboard instantiateViewControllerWithIdentifier:@"InstructionVC"];
@@ -76,32 +75,10 @@
     NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:string];
-    
-//    NSCharacterSet *NUMBERS = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@._-/0123456789+"];
-//    
-//    for(int i=0; i<[string length]; i++)
-//    {
-//        unichar letter=[string characterAtIndex:i];
-//        NSString* letterstring=[[NSString alloc] initWithCharacters:&letter length:1];
-//        if([letterstring isEqualToString:@" "])
-//        {
-//            return NO;
-//        }
-//        
-//        if (![NUMBERS characterIsMember:letter])
-//        {
-//            return NO;
-//        }
-//    }
-//    return YES;
 }
 
 - (IBAction)actionSignup:(id)sender {
     [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://snfscan.com/login/sign_up.php"]];
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
-//                                @"Main" bundle:[NSBundle mainBundle]];
-//    UIViewController *myController = [storyboard instantiateViewControllerWithIdentifier:@"RegisterVC"];
-//    [self.navigationController pushViewController:myController animated:true];
 }
 
 - (IBAction)actionLogin:(id)sender
@@ -175,7 +152,6 @@
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (error) {
-                // NSLog(@"%@",[error localizedDescription]);
                 
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
                 
@@ -301,7 +277,6 @@
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (error) {
-                // NSLog(@"%@",[error localizedDescription]);
                 
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
                 
@@ -324,28 +299,15 @@
                     
                 } else {
                     
-                    //NSLog(@"JSON : %@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
-                    
                     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//                    if ([[dict valueForKey:@"status"] integerValue] == 1) {
-//                        
-//                        NSString *strUserId = [NSString stringWithFormat:@"%ld",[[dict valueForKey:@"userid"] integerValue]];
-//                        
-//                        [[NSUserDefaults standardUserDefaults] setValue:strUserId forKey:@"UserId"];
-//                        
-//                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-//                        UIViewController *myController = [storyboard instantiateViewControllerWithIdentifier:@"InstructionVC"];
-//                        [self.navigationController pushViewController:myController animated:true];
-//                    } else {
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[dict valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[dict valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
+
+                    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    }];
                         
-                        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            
-                        }];
-                        
-                        [alertController addAction:cancel];
-                        [self presentViewController:alertController animated:YES completion:nil];
-//                    }
+                    [alertController addAction:cancel];
+                    [self presentViewController:alertController animated:YES completion:nil];
                     
                 }
             }
