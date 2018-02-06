@@ -114,7 +114,7 @@
             
             if (error) {
                 
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Unable to Scan document" preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
                 [alertController addAction:ok];
@@ -127,7 +127,7 @@
                 NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data  options:NSJSONReadingMutableContainers error:nil];
                 if ([json isKindOfClass:[NSDictionary class]]) {
                     
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Document scaned successfully." preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Document scanned successfully." preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         ShowDataVC *myController = [self.storyboard instantiateViewControllerWithIdentifier:@"ShowDataVC"];
@@ -141,7 +141,7 @@
                     
                 } else {
                     
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"response is not json" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Unable to Scan document" preferredStyle:UIAlertControllerStyleAlert];
                     
                     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
                     [alertController addAction:ok];
